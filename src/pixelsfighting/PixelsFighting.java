@@ -16,11 +16,13 @@ import java.awt.Graphics;
 public class PixelsFighting extends JPanel{
     private final int FRAME_SIDE_LENGTH=500;
     private final int PIXEL_SIDE=2;
-    private int NUMBER_OF_PIXELS;
+    private int NUMBER_OF_PIXELS=FRAME_SIDE_LENGTH/PIXEL_SIDE;
     
     private JFrame frame = new JFrame();
     
-    private Pixel[][] pixels=new Pixel[FRAME_SIDE_LENGTH][FRAME_SIDE_LENGTH];
+    private Pixel[][] pixels   =new Pixel[NUMBER_OF_PIXELS][NUMBER_OF_PIXELS];
+    
+    private Pixel[][] oldPixels=new Pixel[NUMBER_OF_PIXELS][NUMBER_OF_PIXELS];
 
     /**
      * @param args the command line arguments
@@ -53,6 +55,8 @@ public class PixelsFighting extends JPanel{
             }
         }
         
+        oldPixels=pixels;
+        
         
         frame.add(this);
         frame.setVisible(true);  
@@ -63,33 +67,38 @@ public class PixelsFighting extends JPanel{
     @Override
     public void paintComponent(Graphics g){
         boolean thisPixelColor;
+        
         for(int x=0;x<NUMBER_OF_PIXELS;x++){
-            for(int y=0;y<NUMBER_OF_PIXELS;y++){//Inverted the loop
+            for(int y=0;y<NUMBER_OF_PIXELS;y++){
                 
-                pixels[y][x].draw(g);
+                //Draw for the current frame being worked::
+                pixels[x][y].draw(g);
                 
-                thisPixelColor=pixels[y][x].getSide();
+                //Calculate for the next frame::
+                thisPixelColor=oldPixels[x][y].getSide();
                 
                 switch((int)(Math.random()*4)){
                     case 0:
                         if(y>0)
-                            pixels[y-1][x].setSide(thisPixelColor);
+                            pixels[x][y-1].setSide(thisPixelColor);
                         break;
                     case 1:
                         if(x>0)
-                            pixels[y][x-1].setSide(thisPixelColor);
+                            pixels[x-1][y].setSide(thisPixelColor);
                         break;
                     case 2:
                         if(x<NUMBER_OF_PIXELS-1)
-                            pixels[y][x+1].setSide(thisPixelColor);
+                            pixels[x+1][y].setSide(thisPixelColor);
                         break;
                     case 3:
                         if(y<NUMBER_OF_PIXELS-1)
-                            pixels[y+1][x].setSide(thisPixelColor);
+                            pixels[x][y+1].setSide(thisPixelColor);
                         break;
                 }
             }
         }
+        
+        oldPixels=pixels;
         
         try{
             Thread.sleep(20);

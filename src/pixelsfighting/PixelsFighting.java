@@ -14,9 +14,13 @@ import java.awt.Graphics;
  * @author Josh
  */
 public class PixelsFighting extends JPanel{
-    private final int FRAME_SIDE_LENGTH=500;
-    private final int PIXEL_SIDE=2;
+    private final long FRAME_REFRESH_RATE=20;
+    private final int FRAME_SIDE_LENGTH=1000;
+    private final int PIXEL_SIDE=50;
     private int NUMBER_OF_PIXELS=FRAME_SIDE_LENGTH/PIXEL_SIDE;
+    
+    
+    private int dx=1;
     
     private JFrame frame = new JFrame();
     
@@ -41,7 +45,7 @@ public class PixelsFighting extends JPanel{
         this.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
-        frame.setSize(500,500);
+        frame.setSize(FRAME_SIDE_LENGTH,FRAME_SIDE_LENGTH);
         
         
         
@@ -68,11 +72,20 @@ public class PixelsFighting extends JPanel{
     public void paintComponent(Graphics g){
         boolean thisPixelColor;
         
-        for(int x=0;x<NUMBER_OF_PIXELS;x++){
-            for(int y=0;y<NUMBER_OF_PIXELS;y++){
-                
-                //Draw for the current frame being worked::
-                pixels[x][y].draw(g);
+        int x=0;
+        
+        dx*=-1;
+        
+        if(dx==1){
+            x=0;
+        } else if(dx==-1){
+            x=NUMBER_OF_PIXELS-1;
+        } else{
+            System.err.println("dx at unexpected value " + dx);
+        }
+        
+        for(;x<NUMBER_OF_PIXELS&&x>0;x+=dx){
+            for(int y=0;y<NUMBER_OF_PIXELS;y+=1){
                 
                 //Calculate for the next frame::
                 thisPixelColor=oldPixels[x][y].getSide();
@@ -98,10 +111,17 @@ public class PixelsFighting extends JPanel{
             }
         }
         
+        for(x=0;x<NUMBER_OF_PIXELS;x++){
+            for(int y=0;y<NUMBER_OF_PIXELS;y++){
+                //Draw for the current frame being worked::
+                pixels[x][y].draw(g);
+            }
+        }
+        
         oldPixels=pixels;
         
         try{
-            Thread.sleep(20);
+            Thread.sleep(FRAME_REFRESH_RATE);
         } catch(InterruptedException e){
             System.err.println("Error sleeping Thread :: " + e);
         }

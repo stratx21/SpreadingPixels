@@ -13,6 +13,8 @@ import java.awt.Graphics;
  * @author Josh
  */
 public class Pixel{
+    public static int leftPixels;
+    
     /**
      * The identifier for the team this Pixel instance is on.
     */
@@ -58,7 +60,14 @@ public class Pixel{
     }
     
     public void setSide(boolean leftNew){
-        leftSide=leftNew;
+        if(leftNew!=leftSide){
+            if(leftNew){
+                leftPixels++;
+            }else{
+                leftPixels--;
+            }
+            leftSide=leftNew;
+        }
     }
     
     public int getX(){

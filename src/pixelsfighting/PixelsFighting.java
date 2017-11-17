@@ -49,7 +49,7 @@ public class PixelsFighting extends JPanel{
         for(int y=0;y<NUMBER_OF_PIXELS;y++){
             boolean toBeLeft=y<((NUMBER_OF_PIXELS)/2);
             for(int x=0;x<NUMBER_OF_PIXELS;x++){
-                pixels[y][x]=new Pixel(x*PIXEL_SIDE,y*PIXEL_SIDE,toBeLeft);
+                pixels[x][y]=new Pixel(x*PIXEL_SIDE,y*PIXEL_SIDE,toBeLeft);
             }
         }
         

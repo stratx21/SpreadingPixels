@@ -46,9 +46,9 @@ public class PixelsFighting extends JPanel{
         
         
         //Pixel objects setup::
-        for(int y=0;y<NUMBER_OF_PIXELS;y++){
-            boolean toBeLeft=y<((NUMBER_OF_PIXELS)/2);
-            for(int x=0;x<NUMBER_OF_PIXELS;x++){
+        for(int x=0;x<NUMBER_OF_PIXELS;x++){
+            boolean toBeLeft=x<((NUMBER_OF_PIXELS)/2);
+            for(int y=0;y<NUMBER_OF_PIXELS;y++){
                 pixels[x][y]=new Pixel(x*PIXEL_SIDE,y*PIXEL_SIDE,toBeLeft);
             }
         }

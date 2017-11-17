@@ -71,8 +71,10 @@ public class PixelsFighting extends JPanel{
      */
     public PixelsFighting(){
         
-        Pixel.leftPixels=NUMBER_OF_PIXELS=FRAME_SIDE_LENGTH/PIXEL_SIDE;
+        NUMBER_OF_PIXELS=FRAME_SIDE_LENGTH/PIXEL_SIDE;
         Pixel.setWidth(PIXEL_SIDE);
+        
+        Pixel.leftPixels=NUMBER_OF_PIXELS/2;
         
         //Output/display setup::
         this.setLayout(null);
